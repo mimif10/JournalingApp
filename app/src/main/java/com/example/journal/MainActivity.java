@@ -1,47 +1,27 @@
 package com.example.journal;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.journal.Prompts.Prompt1;
-import com.example.journal.Prompts.Prompt2;
-import com.example.journal.Prompts.Prompt3;
-import com.example.journal.Prompts.Prompt4;
-import com.example.journal.Prompts.Prompt5;
-import com.example.journal.Prompts.Prompt6;
-import com.example.journal.Prompts.Prompt7;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    // reference to all the buttons and controls on the layout
+    // member variable for the main screen from the class
+
     // FloatingActionButton addButton;
+    // Button newEntryBtn;
+    // ListView viewListBtn;
+    // FloatingActionButton saveButton;
+    TextView save_Button;
+    TextView cancel_Button;
+    EditText textEntry;
 
     // Add data to Array String
     String[] prompts = {"Today I learned...",
@@ -54,17 +34,17 @@ public class MainActivity extends AppCompatActivity {
 
     // Add data to Listview
     ListView listView;
-    TextView save_Button;
-    TextView cancel_Button;
-    EditText textEntry;
+    ArrayAdapter<String> adapter;
 
-    @Override
+    @Override // onCreate starts the application
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    ArrayAdapter<String> adapter;
+        // On Click Listeners for the button
+        // newEntryBtn = findViewById(R.id.btn_newEntry);
+        // viewListBtn = findViewById(R.id.entry_List);
+    }
 
     public void openDialog(View v) {
         // add listView to alert box
@@ -145,7 +125,23 @@ public class MainActivity extends AppCompatActivity {
                         dialog7.show();
                 }
             }
+            // Add new entry to the database when we click on the prompt Save button
+
+            // Reference to the DbHelper class aka new database we're creating for the journal entry
+            //  context is a ref to the application
+            DbHelper database = new DbHelper(MainActivity.this);
         });
+    }
+
+    protected void onResume() // Will show the list when you open the application
+    {
+        refreshList();
+        super.onResume();
+    }
+
+    // To refresh the List (Line 31)
+    private void refreshList(){
+        // Set the Adapter for the RecyclerView - pass the Adapter's context and the getToDos method,
     }
 }
 
