@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SQLiteTech</string>
+    <string name="app_name">Journal</string>
+    <string name="Journal_dashboard">Journal Dashboard\n</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/prompt1"
+        android:title="Today I learned..."/>
+
+    <item android:id="@+id/prompt2"
+        android:title="Something that made me smile today..."/>
+
+    <item android:id="@+id/prompt3"
+        android:title="Three things I am grateful for"/>
+
+    <item android:id="@+id/prompt4"
+        android:title="Today I realized..."/>
+
+    <item android:id="@+id/prompt5"
+        android:title="Today, this happened..."/>
+
+    <item android:id="@+id/prompt6"
+        android:title="What happened today?"/>
+
+    <item android:id="@+id/prompt7"
+        android:title="Add new journal entry"/>
+</menu>
