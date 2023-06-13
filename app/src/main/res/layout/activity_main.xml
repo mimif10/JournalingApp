@@ -67,23 +67,15 @@
         android:onClick="openDialog"
         app:srcCompat="@drawable/add_icon" />
         <!--android:onClick="showPopup"-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/new_task"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".MainActivity">
 
-    <Button
+
+    <!--<Button
         android:id="@+id/btn_newEntry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/white"
-        android:hint="Today I learned..."
-        android:text="New"
+        android:layout_marginTop="58dp"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -94,7 +86,7 @@
         android:id="@+id/entry_List"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/btn_newEntry" />
+        android:layout_below="@+id/btn_newEntry" />-->
 
 
 </RelativeLayout>

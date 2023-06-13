@@ -13,20 +13,19 @@ public class JournalEntry { // this is the Note
 
     private static String jEntryDescription = "description"; // description
     public static String createdAt = "date"; // jourDate = date
-    public JournalEntry(long id, String jEntryText, boolean isCompleted) {
+    private static boolean isCompleted;   // to store the status for each entry/item
+
+    public JournalEntry(String jEntryTitle, String jEntryDescription, String createdAt) {
 
         this.id = id;
         this.jEntryId = jEntryId;
-        this.jEntryTitle = jEntryText;
-        this.jEntryDescription =  jEntryDescription;
-        this.isCompleted = isCompleted;
+        this.jEntryTitle = jEntryTitle;
+        this.jEntryDescription = jEntryDescription;
+        // this.isCompleted = isCompleted;
         this.createdAt = createdAt;
     }
 
-    private static boolean isCompleted;   // to store the status for each entry/item
-
-    // constructor for each property
-
+    // constructors for each property
     // default constructor
     public JournalEntry() {
     }
@@ -35,9 +34,12 @@ public class JournalEntry { // this is the Note
     @Override
     public String toString() {
         return "NewEntryModel{" +
-                "id=" + id +
-                ", jEntryName='" + jEntryTitle + '\'' +
+                //  "id=" + id +
+                // "jEntryId=" + jEntryId +
+                "jEntryTitle =" + jEntryTitle +
+                ", jEntryDescription='" + jEntryDescription + '\'' +
                 ", isCompleted=" + isCompleted +
+                ", createdAt " + createdAt +
                 '}';
     }
 
@@ -51,10 +53,12 @@ public class JournalEntry { // this is the Note
         this.id = id;
     }
 
-    public String getjEntryTitle() { return jEntryTitle; }
-
-    public void setjEntryTitle(long id) {
+    public void setjEntryTitle(String jEntryTitle) {
         this.jEntryId = jEntryId;
+    }
+
+    public String getjEntryTitle() {
+        return jEntryTitle;
     }
 
     public String getjEntryDescription() {

@@ -87,7 +87,7 @@ public class DbHelper extends SQLiteOpenHelper {
         {
             // then loop through the result, create a new journal entry for each
             // put then into the result list
-
+            do
             {
                 // local variable of the type we expect to get (ID)
                 int entryID = cursor.getInt(0); // 0 is first line in database

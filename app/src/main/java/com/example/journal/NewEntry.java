@@ -23,14 +23,15 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class NewEntry extends AppCompatActivity {
+    /**Use databasehandler to add the item in the database*/
     public DbHelper dbHelper;
+
     // reference to all the buttons and controls on the layout
     // member variable for the main screen from the class
     EditText newTextEntry;
     FloatingActionButton saveButton;
     ImageView imageView;
     ImageButton imageButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,21 @@ public class NewEntry extends AppCompatActivity {
         newTextEntry = findViewById(R.id.textEditor);
         imageView = findViewById(R.id.imageView);
         imageButton = findViewById(R.id.imageButton);
+        saveButton = findViewById(R.id.saveButton);
+
+        // reference DatabaseHelper?
+
+        saveButton = findViewById(R.id.saveButton);
+
+        // Button Listeners for the save Button
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbHelper db = new DbHelper(NewEntry.this);
+                // create a return list (define the list)
+                //List<NewEntryModel> saved = DbHelper.getAllList();
+            }
+        });
 
         //imageButton.setEnabled(false); // disable button then grant permission
 
@@ -53,9 +69,6 @@ public class NewEntry extends AppCompatActivity {
             imageButton.setEnabled(true);
 
         // Once permission is granted
-
-
-
 
         //TODO get the image from gallery and display it
         ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
@@ -75,10 +88,8 @@ public class NewEntry extends AppCompatActivity {
                             //cancelled
                             Toast.makeText(NewEntry.this, "Cancelled...", Toast.LENGTH_SHORT).show();
                         }*/
-
                     }
                 });
-
         // launch intent to pick image from gallery
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,13 +100,6 @@ public class NewEntry extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         saveButton = findViewById(R.id.saveButton);
 
         // Button Listeners for the save Button
@@ -105,10 +109,7 @@ public class NewEntry extends AppCompatActivity {
                 DbHelper db = new DbHelper(NewEntry.this);
                 // create a return list (define the list)
                 // List<NewEntryModel> saved = DbHelper.getAllList();
-
             }
         });
-
-
     }
 }
