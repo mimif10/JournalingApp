@@ -7,19 +7,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 import com.example.journal.newEntry.JournalEntry;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.jvm.internal.Intrinsics;
+
 public class DbHelper extends SQLiteOpenHelper {
-    public static final String TABLE_NewEntryModel = "JournalEntry";
-    public static final String COL_ENTRY_ID = "entryId";
-    public static final String COL_NEW_ENTRY_NAME = "jEntryText";
-    public static final String COL_IS_COMPLETED = "isCompleted";
+    // Design the database
+    public static final String DB_NAME = "Journal.db";
+    // Create Table for Journal Entry
+    public static final String TABLE_JOURNAL_ENTRY= "JournalEntry";
+    // Column for ID
+    public static final String COL_ENTRY_ID = "jEntryId";
+    // Column for title
+    public static final String COL_NEW_ENTRY_TITLE = "jEntryTitle";
+  //  public  static final String COL_IMAGE = "image";
+   // public static final String COL_IS_COMPLETED = "isCompleted";
 
     public DbHelper(@Nullable Context context) {
         // context finds the database, database name, default: null, version starts at version 1
         // super is the parent class for SQLiteOpenHelper
-        super(context, "JournalEntry.db", null, 1);
+        super(context, "Journal.db", null, 1);
+        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     // implement methods for the SQLiteOpenHelper class
@@ -30,39 +43,16 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
     // will generate a new table
 
-        //define static variables
+        // define static variables
         // start by defining a string statement to create the table
-        String Journal_Entry_Table = "CREATE TABLE " + TABLE_NewEntryModel + "(" + COL_ENTRY_ID + "integer PRIMARY KEY AUTOINCREMENT," + COL_NEW_ENTRY_NAME + "TEXT," + COL_IS_COMPLETED + "bool);";
-
-        // execute SQL query that will create a table
-        //db.execSQL("create Table " + TABLE_NewEntryModel + "(" + "COL_ENTRY_ID" + "INTEGER primary key autoIncrement, " + " jEntryName, activeSave bool);");
+        String Journal_Entry_Table = "CREATE TABLE " + TABLE_JOURNAL_ENTRY + "( jEntryId integer PRIMARY KEY AUTOINCREMENT, jEntryTitle TEXT, image BLOG);";
+                                                                                                                                                                      // ," + COL_IS_COMPLETED + "bool
+        // then execute SQL query that will create a table
+        //db.execSQL("create Table " + TABLE_JOURNAL_ENTRY + "(" + "COL_ENTRY_ID" + "INTEGER primary key autoIncrement, " + " jEntryName, activeSave bool);");
         db.execSQL(Journal_Entry_Table);
     }
 
-    /** Add item into the database using dbHandler (DatabaseHandler)
-     It expects a new customer model*/
-    public boolean addOne(JournalEntry newEntry){
-        // SQLiteOpenHelper property to write to the database
-        SQLiteDatabase db = this.getWritableDatabase(); // since we're adding data to the Db
-        ContentValues cv = new ContentValues(); // object that stores values/data in pairs (cv.put("name", value)
-        // specify value name along with its content
-        // D
-        // cv.put(COL_NEW_ENTRY_NAME, JournalEntry.getjEntryT()); // associate a column name with a string
-        cv.put(COL_IS_COMPLETED, JournalEntry.isCompleted());
-        // Don't have to enter an ID bc the column's database is auto-incremented
-
-        // Insert value into the table
-        long insert = db.insert(TABLE_NewEntryModel,null, cv);
-        if (insert == -1)
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
-
-    }
-
+    // onUpgrade will check if table exists or not
     // onUpgrade is called if the version number changes
     // prevents previous user apps from breaking when you change the Db design
     @Override
@@ -70,16 +60,60 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop Table if exists Journal_Entry_Table");
     }
 
-    // Get the list on the table
-    public List<JournalEntry> getAllList()
+
+
+    /** Add item into the database using dbHandler (DatabaseHandler)
+     It expects a new customer model*/
+    // Inserting the task from MainActivity using DbHelper
+    // Adding the task by passing the ToDo_obj (JournalEntry) as a parameter
+    // public boolean addOne(JournalEntry newEntry){
+    public boolean addOne(String title){
+        // SQLiteOpenHelper property
+        // Permission to write to the database
+        SQLiteDatabase db = this.getWritableDatabase(); // since we're adding data to the Db
+
+        // Use contentValues to collect the columns with the parameter variable
+         ContentValues cv = new ContentValues(); // object that stores values/data in pairs (cv.put("name", value)
+        // specify value name along with its content
+        //cv.put(COL_NEW_ENTRY_TITLE, title);
+        //cv.put(COL_IMAGE, image);
+        cv.put(COL_NEW_ENTRY_TITLE, title); // associate a column name with a string
+        //cv.put("title", newEntry.getjEntryTitle());
+        // Don't have to enter an ID bc the column's database is auto-incremented
+
+        // Insert value into the table
+        long insert = db.insert(TABLE_JOURNAL_ENTRY,(String)null, cv);
+        // long result = db.insert("JournalEntry",(String)null, cv);
+        //return result != (long)-1;
+        if (insert == -1) return false;
+        else return true;
+    }
+
+/*    public final void updateEntryDashboard(JournalEntry newEntry) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("name", newEntry.getjEntryTitle());
+        db.update("JournalEntry", cv, "id=?", new String[]{String.valueOf(newEntry.getId())});
+    }
+
+    public final void deleteToDo(long entryId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("JournalEntry", "id=?", new String[]{String.valueOf(entryId)});
+    }*/
+
+
+
+    // Get the list of journal entries on the table
+    public ArrayList<JournalEntry> getjournalEntry()
     {
         // create a return list (define the list)
-        List<JournalEntry> returnList = new ArrayList<>();
+        ArrayList<JournalEntry> returnList = new ArrayList<>();
+        // Get permission from the database to read the data
+        SQLiteDatabase db = this.getReadableDatabase();
+
         // Get data from the database - sequel statement that will select data from the table
-        String queryString = "SELECT * FROM " + TABLE_NewEntryModel;
-        // Reference the database and get the data from it
-        SQLiteDatabase db;
-        db = this.getReadableDatabase();
+        String queryString = "SELECT * FROM " + TABLE_JOURNAL_ENTRY;
+
         // A cursor is a return type of the rawQuery
         // it is the result set of the query
         Cursor cursor = db.rawQuery(queryString, null); // raw-query returns a cursor
@@ -90,11 +124,21 @@ public class DbHelper extends SQLiteOpenHelper {
             do
             {
                 // local variable of the type we expect to get (ID)
-                int entryID = cursor.getInt(0); // 0 is first line in database
-                String entryName = cursor.getColumnName(1); // from database at position 1
+                int id = cursor.getInt(0); // set this as first line in database
+                String title = cursor.getString(1); // for the edit text
+                // newEntry.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                // newEntry.setjEntryId(cursor.getLong(cursor.getColumnIndex("jEntryId")));
                 // no boolean in SQLite, it just saves the int as 0 or 1
                 // convert the int = 2 into a boolean
-                Boolean isCompleted = cursor.getInt(2) == 1 ? true: false;
+
+                // newEntry.setjEntryTitle(entryName);
+                // Pass this data in the Journal entry model
+                JournalEntry newEntry = new JournalEntry(id, title);
+
+                // Add it to the list
+                returnList.add(newEntry);
+
+                // Boolean isCompleted = cursor.getInt(2) == 1 ? true: false;
                                                                       // ternary operator: a result variable will be given a question
                                                                      // variable = value1 ? value2: value3
                                                                     // if 1st question = true, then we assign the next value to the ?
@@ -108,5 +152,9 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public void updateJournalEntry(JournalEntry journalEntry) {
+    }
+
 
 }

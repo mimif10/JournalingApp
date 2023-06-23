@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundHome"
+    android:nestedScrollingEnabled="true"
     tools:context=".MainActivity">
 
 
@@ -28,30 +29,17 @@
     </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerView_layout"
+    <ListView
+        android:id="@+id/Mail_ListViewlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/nameBar"
         android:layout_marginTop="1dp"
-        tools:listitem="@layout/entry_card"
         android:background="@color/colorBackgroundHome"
-        tools:context="com.example.journaling.MainActivity"/>
-
-  <!--  <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/AddButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/colorFAB"
         android:clickable="true"
-        android:src="@drawable/add_icon" />-->
+        android:nestedScrollingEnabled="true"
+        tools:listitem="@layout/entry_card" />
+    <!--    android:contentDescription="@string/enter_Text"-->
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -66,27 +54,7 @@
         android:clickable="true"
         android:onClick="openDialog"
         app:srcCompat="@drawable/add_icon" />
-        <!--android:onClick="showPopup"-->
-
-
-    <!--<Button
-        android:id="@+id/btn_newEntry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="58dp"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        tools:visibility="visible" />
-
-    <ListView
-        android:id="@+id/entry_List"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/btn_newEntry" />-->
+    <!--android:onClick="showPopup"-->
 
 
 </RelativeLayout>

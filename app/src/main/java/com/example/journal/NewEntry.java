@@ -1,3 +1,4 @@
+/*
 package com.example.journal;
 
 
@@ -23,7 +24,9 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class NewEntry extends AppCompatActivity {
-    /**Use databasehandler to add the item in the database*/
+    */
+/**Use databasehandler to add the item in the database*//*
+
     public DbHelper dbHelper;
 
     // reference to all the buttons and controls on the layout
@@ -84,10 +87,12 @@ public class NewEntry extends AppCompatActivity {
                             Uri imageUri = data.getData();
                             imageView.setImageURI(imageUri);
                         }
-                        /*else {
+                        */
+/*else {
                             //cancelled
                             Toast.makeText(NewEntry.this, "Cancelled...", Toast.LENGTH_SHORT).show();
-                        }*/
+                        }*//*
+
                     }
                 });
         // launch intent to pick image from gallery
@@ -112,4 +117,4 @@ public class NewEntry extends AppCompatActivity {
             }
         });
     }
-}
+}*/
