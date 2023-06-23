@@ -1,50 +1,27 @@
 package com.example.journal.newEntry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Will hold the dataSet that will be displayed in androidx Recyclerview.
 // implementing the values from DashboardModel Class
-public class JournalEntry { // this is the Note
-    private long id = -1L;         // to store the primary key
+public class JournalEntry {// this is the Note
+   // private ArrayList <List> newList = (new ArrayList();
+    long id;
+    String jEntryTitle;
+  //  String jEntryDesc;
+   // byte[] image;
 
-    // to store the parent jEntry ID
-    private long jEntryId = -1L; // id
 
-    // to store subtask name
-    private static String jEntryTitle = "title"; // title
-
-    private static String jEntryDescription = "description"; // description
-    public static String createdAt = "date"; // jourDate = date
-    private static boolean isCompleted;   // to store the status for each entry/item
-
-    public JournalEntry(String jEntryTitle, String jEntryDescription, String createdAt) {
-
+    public JournalEntry(long id, String title) {
         this.id = id;
-        this.jEntryId = jEntryId;
-        this.jEntryTitle = jEntryTitle;
-        this.jEntryDescription = jEntryDescription;
+        this.jEntryTitle = title;
+      //  this.jEntryDesc = desc;
+       // this.image = pic;
         // this.isCompleted = isCompleted;
-        this.createdAt = createdAt;
+        // this.createdAt = createdAt;
     }
-
-    // constructors for each property
-    // default constructor
-    public JournalEntry() {
-    }
-
-    // to string method necessary to print the properties into a single string
-    @Override
-    public String toString() {
-        return "NewEntryModel{" +
-                //  "id=" + id +
-                // "jEntryId=" + jEntryId +
-                "jEntryTitle =" + jEntryTitle +
-                ", jEntryDescription='" + jEntryDescription + '\'' +
-                ", isCompleted=" + isCompleted +
-                ", createdAt " + createdAt +
-                '}';
-    }
-
-    // getters and setters for each property
-
+// getters and setters for each property
     public long getId() {
         return id;
     }
@@ -53,23 +30,73 @@ public class JournalEntry { // this is the Note
         this.id = id;
     }
 
-    public void setjEntryTitle(String jEntryTitle) {
-        this.jEntryId = jEntryId;
-    }
-
     public String getjEntryTitle() {
-        return jEntryTitle;
+        return this.jEntryTitle;
+    }
+    public void setjEntryTitle(String jEntryTitle) {
+        this.jEntryTitle = jEntryTitle;
     }
 
-    public String getjEntryDescription() {
-        return jEntryDescription;
+   /* public String getjEntryDesc() {
+        return jEntryDesc;
     }
-
-    public void setjEntryDescription(String jEntryDescription) {
-        this.jEntryDescription = jEntryDescription;
+    public void setjEntryDesc(String jEntryDesc) {
+        this.jEntryDesc = jEntryDesc;
     }
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
+    }*/
 
-    public static boolean isCompleted() {
+    // private long id = -1L;         // to store the primary key
+    // to store the parent jEntry ID
+   // private long jEntryId = -1L; // id
+
+    // to store subtask name
+   // private String jEntryTitle = "title"; // title
+
+   // private static String jEntryDescription = "description"; // description
+   // public String createdAt = "date"; // jourDate = date
+  //  private boolean isCompleted;   // to store the status for each entry/item
+
+
+
+    // constructors for each property
+
+
+    // to string method necessary to print the properties into a single string
+ /*   @Override
+    public String toString() {
+        return "NewEntryModel{" +
+                  "id=" + id +
+                 "jEntryId=" +
+                //jEntryId +
+                "jEntryTitle =" + jEntryTitle +
+              //  ", jEntryDescription='" + jEntryDescription + '\'' +
+                ", isCompleted="
+                //+ isCompleted +
+            //    ", createdAt " + createdAt +
+                '}';
+    }*/
+
+
+
+    // public long getjEntryId() {return jEntryId;}
+   // public void setjEntryId(long jEntryId) {this.jEntryId = jEntryId;}
+
+
+
+  //  public String getjEntryDescription() {
+  //      return jEntryDescription;
+  //  }
+
+   // public void setjEntryDescription(String jEntryDescription) {
+   //     this.jEntryDescription = jEntryDescription;
+   // }
+
+  /*  public boolean isCompleted() {
         return isCompleted;
     }
 
@@ -83,5 +110,5 @@ public class JournalEntry { // this is the Note
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
-    }
+    }*/
 }

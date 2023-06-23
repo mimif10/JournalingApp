@@ -21,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.journal.DbHelper;
-import com.example.journal.NewEntry;
 import com.example.journal.R;
 import com.example.journal.newEntry.JournalEntry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Prompt1 extends AppCompatActivity {
-    /**Use databasehandler to add the item in the database*/
+// Use databasehandler to add the item in the database
+
     public DbHelper dbHelper;
 
     // reference to all the buttons and controls on the layout
@@ -45,47 +45,49 @@ public class Prompt1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prompt1);
+        dbHelper = new DbHelper(this);
 
         // On Click Listeners for the button
         newTextEntry = findViewById(R.id.textEditor);
-        imageView = findViewById(R.id.imageView);
-        imageButton = findViewById(R.id.imageButton);
+       // imageView = findViewById(R.id.imageView);
+        imageButton = findViewById(R.id.AddImageButton);
         saveButton = findViewById(R.id.saveButton);
-        cancelButton = findViewById(R.id.cancelButton);
+        //cancelButton = findViewById(R.id.cancelButton);
         // reference DatabaseHelper?
 
         // Button Listeners for the save Button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbHelper db = new DbHelper(Prompt1.this);
-                EditText NoteText = (EditText)newTextEntry.getText();
-                String title = String.valueOf(newTextEntry.getText());
-                String description = String.valueOf(newTextEntry.getText());
+                // EditText NoteText = (EditText)newTextEntry.getText();
+                String title = newTextEntry.getText().toString();
+                // String description = String.valueOf(newTextEntry.getText());
+                dbHelper.addOne(title);
 
                 // create a return list (define the list)
                 //List<NewEntryModel> saved = DbHelper.getAllList();
-                if(NoteText != null); // Check the Edit Text if not empty
-                {
+              //  if(NoteText != null); // Check the Edit Text if not empty
+               // {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("MM, dd, YYYY");
                     String currentDate = dateFormat.format(new Date());
 
                     // Create journalEntry obj to pass as a parameter
-                    JournalEntry newJournal = new JournalEntry();
+                  //  JournalEntry newJournal = new JournalEntry();
                     // set jEntryName (entered on EditText))
-                    newJournal.setjEntryTitle(title);
-                    newJournal.setjEntryDescription(description);
-                    newJournal.setCreatedAt(currentDate);
-                    newJournal.setId(entryId);
-                    /** Add item into the database using dbHandler (DatabaseHelper)*/
-                    dbHelper.addOne(newJournal);
+                 //   newJournal.setjEntryTitle(title);
+                    //newJournal.setjEntryDescription(description);
+                   // newJournal.setCreatedAt(currentDate);
+                 //   newJournal.setId(entryId);
+// Add item into the database using dbHandler (DatabaseHelper)
+
+                    //dbHelper.addOne(newJournal);
                     //refreshList(); // Call after an item is added
-/*
-                    EditText entryName = (EditText)NoteText.getText();
+                    /*EditText entryName = (EditText)NoteText.getText();
                     newJournal.setId(Prompt1.this.getTaskId());
                     newJournal.setjEntryTitle(entryName.getText().length());
                     newJournal.setjEntryDescription(entryName.);*/
-                }
+
+
             }
         });
 
@@ -95,7 +97,7 @@ public class Prompt1 extends AppCompatActivity {
         //    recycView.setAdapter();
        // }
         // Button Listeners for the cancel Button
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+       /* cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DbHelper db = new DbHelper(Prompt1.this);
@@ -103,24 +105,25 @@ public class Prompt1 extends AppCompatActivity {
                 //List<NewEntryModel> saved = DbHelper.getAllList();
             }
         });
-
+*/
         //imageButton.setEnabled(false); // disable button then grant permission
 
-        // if user has not granted permission
+       /* // if user has not granted permission
         if(ActivityCompat.checkSelfPermission(Prompt1.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
             // request permission
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.CAMERA}, 100);}
         else
             imageButton.setEnabled(true);
-
+*/
         // Once permission is granted
 
-        //TODO get the image from gallery and display it
-        ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
+  //TODO get the image from gallery and display it
+      /*  ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
-                    @Override
+
+    @Override
                     public void onActivityResult(ActivityResult result) {
                         // here we will handle the result of our intent
                         if (result.getResultCode() == Activity.RESULT_OK){
@@ -130,14 +133,16 @@ public class Prompt1 extends AppCompatActivity {
                             Uri imageUri = data.getData();
                             imageView.setImageURI(imageUri);
                         }
-                        /*else {
+
+else {
                             //cancelled
                             Toast.makeText(NewEntry.this, "Cancelled...", Toast.LENGTH_SHORT).show();
-                        }*/
+                        }
+
                     }
                 });
         // launch intent to pick image from gallery
-        imageButton.setOnClickListener(new View.OnClickListener() {
+   imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // intent to pick image from gallery
@@ -146,10 +151,11 @@ public class Prompt1 extends AppCompatActivity {
             }
         });
 
+
         //saveButton = findViewById(R.id.saveButton);
 
         // Button Listeners for the save Button
-       /* saveButton.setOnClickListener(new View.OnClickListener() {
+ saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -157,6 +163,7 @@ public class Prompt1 extends AppCompatActivity {
                 // create a return list (define the list)
                 // List<NewEntryModel> saved = DbHelper.getAllList();
             }
-        });*/
-    }
+        });
+*/}
+
 }

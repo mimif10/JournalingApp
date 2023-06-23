@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,64 +14,92 @@ import java.util.ArrayList;
 
 
 // extends RecycleView Adapter (specify the ViewHolder for the adapter - which gives us access to the views)
-public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHolder>{
-
-    View rootView;
-
+public class JournalAdapter extends BaseAdapter {
     Context context;
-    ArrayList<JournalEntry> newEntry; // member variable for the list of entries
+    View rootView;
+    ArrayList<JournalEntry> listOfEntries; // member variable for the list of entries
+                                          // List where we will store the user input
+    DbHelper dbHelper;
 
-    ArrayList<String> enteredEntry; // List where we will store the user input
-
-    // Next fill in the adapter - pass in the list into the constructor
+    /** Next fill in the adapter - pass in context and the list into the constructor*/
     // constructor with list passed from MainActivity when Adapter is called
-    public JournalAdapter(ArrayList<JournalEntry> allEntries) {
-        this.newEntry = allEntries;
+    public JournalAdapter(Context context, ArrayList<JournalEntry> allEntries) {
+        this.context = context;
+        this.listOfEntries = allEntries;
     }
 
-    //Recyclerview ViewHolder
-    // Provide a direct reference for each view with the list entry
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // member variables for each view within each row for an entry
-        TextView titleTextView;
-        TextView textDescriptionView;
-        TextView dateView;
-        ImageView deleteView;
-
-
-        // constructor for the entire row and looks for each view for the variables we created
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            // finding view by view id.
-            titleTextView = (TextView)itemView.findViewById(R.id.TitleTextView);
-            textDescriptionView = (TextView)itemView.findViewById(R.id.descTextView);
-            dateView = (TextView)itemView.findViewById(R.id.dateTextView);
-            deleteView = (ImageView) itemView.findViewById(R.id.deleteImage);
-        }
-    }
-
-
-    // To inflate layout from XML and return the holder
+    /** How many items are in the data set represented by this Adapter.
+     - return Count of items.*/
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getCount() {
+        return listOfEntries.size();
+    }
 
-        // Initialize view for recyclerview
-        View newEntryView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.entry_card, parent, false);
-        /*Same as
+    /** Get the data item associated with the specified position in the data set.
+     * @param position Position of the item whose data we want within the adapter's data set.
+     - return The data at the specified position*/
+    @Override
+    public Object getItem(int position) {
+        return listOfEntries.get(position);
+    }
+
+    /**Get the row id associated with the specified position in the list.
+     * @param position The position of the item within the adapter's data set whose row id we want.
+     - return The id of the item at the specified position.*/
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    /** Get a View that displays the data at the specified position in the data set. When the View is inflated, the
+     * parent View (GridView, ListView...) will apply default layout parameters unless you use
+     * {@link LayoutInflater#inflate(int, ViewGroup, boolean)} to specify a root view and to prevent attachment to the root.
+     * @param position    The position of the item within the adapter's data set of the item whose view we want.
+     * @param convertView The old view to reuse, if possible. Note: You should check that this view
+     *                    is non-null and of an appropriate type before using. If it is not possible to convert
+     *                    this view to display the correct data, this method can create a new view.
+     *                    Heterogeneous lists can specify their number of view types, so that this View is
+     *                    always of the right type (see {@link #getViewTypeCount()} and
+     *                    {@link #getItemViewType(int)}).
+     * @param parent      The parent that this view will eventually be attached to
+     */
+    @Override //  constructor for the entire row and looks for each view for the variables we created
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Create a View manually or inflate it from an XML layout file.
+        convertView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.entry_card, parent, false);
+
+        /* Same as
          LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-         Initialize view for recyclerview - thenInflate the custom layout
-        View newEntryView = inflater.inflate(R.layout.entry_card, parent, false);*/
+         Initialize view for convertView - then Inflate the custom layout
+        convertView = inflater.inflate(R.layout.entry_card, parent, false);*/
 
-        context = parent.getContext();
-        rootView = ((Activity)context).getWindow().getDecorView()
-                .findViewById(android.R.id.content);
+        // Provide a direct reference for each view with the list entry
+        // Cast the variales from the entry_card layout that will show on the main Layout
+        TextView cardTitle = convertView.findViewById(R.id.TitleTextView);
+        //TextView cardDesc = convertView.findViewById(R.id.descTextView);
+        TextView cadrDate = convertView.findViewById(R.id.dateTextView);
+        ImageView deleteButton = convertView.findViewById(R.id.deleteEntryImage);
 
-        // attach view to ViewHolder - Return a new instance of the ViewHolder
-        ViewHolder viewHolder = new ViewHolder(newEntryView);
-        return viewHolder;
-        }
+        // reference the JournalEntry model and get the list
+        JournalEntry journalEntry = listOfEntries.get(position);
+        String title = journalEntry.getjEntryTitle(); // get the title from the model
+
+        // set the title as the cardTitle
+        cardTitle.setText(title);
+
+        // for the image - Tutorial 3
+        // byte[] image = journalEntry.getImage();
+        // Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+
+        return convertView;
+    }
+
+
+
+
+
+        /*
 
         // To populate data into the the entry item through the holder
         @Override
@@ -91,16 +120,29 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
             dateView.setText(entry.getCreatedAt());
 
             // implement setOnClickListener event on each entry view
-           // holder.deleteView.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener((View.OnClickListener)new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((JournalEntry)JournalAdapter.this.getList().get(position)).setCompleted(!((JournalEntry)JournalAdapter.this.getList().get(position)).isCompleted());
+                  //  JournalAdapter.this.getDbHelper().updateJournalEntry((JournalEntry)JournalAdapter.this.getList().get(position));
+                }
+            });
+
+            }
+
+*/
+    /*public DbHelper getDbHelper() {return this.dbHelper;}
+
+    public ArrayList<JournalEntry> getList() { return this.newEntry; }*/
+
+    //holder.deleteView.setOnClickListener(new View.OnClickListener() {
             //    @Override
             //    public void onClick(View v) {
             //        Toast.makeText(context, )
             //    }
            // })
-        }
+        //}
 
-    @Override
-    public int getItemCount() {
-        return newEntry.size();
-    }
+
 }
+
