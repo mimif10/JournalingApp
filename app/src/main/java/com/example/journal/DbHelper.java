@@ -8,13 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 import com.example.journal.newEntry.JournalEntry;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-
-import kotlin.jvm.internal.Intrinsics;
 
 public class DbHelper extends SQLiteOpenHelper {
     // Design the database
@@ -67,7 +61,7 @@ public class DbHelper extends SQLiteOpenHelper {
     // Inserting the task from MainActivity using DbHelper
     // Adding the task by passing the ToDo_obj (JournalEntry) as a parameter
     // public boolean addOne(JournalEntry newEntry){
-    public boolean addOne(String title){
+    public boolean addOne(String title){ /** Keep parameter as string title */
         // SQLiteOpenHelper property
         // Permission to write to the database
         SQLiteDatabase db = this.getWritableDatabase(); // since we're adding data to the Db
@@ -75,9 +69,9 @@ public class DbHelper extends SQLiteOpenHelper {
         // Use contentValues to collect the columns with the parameter variable
          ContentValues cv = new ContentValues(); // object that stores values/data in pairs (cv.put("name", value)
         // specify value name along with its content
-        //cv.put(COL_NEW_ENTRY_TITLE, title);
+        cv.put(COL_NEW_ENTRY_TITLE, title);
         //cv.put(COL_IMAGE, image);
-        cv.put(COL_NEW_ENTRY_TITLE, title); // associate a column name with a string
+        //cv.put(COL_NEW_ENTRY_TITLE, journalEntry.getTitle()); // associate a column name with a string
         //cv.put("title", newEntry.getjEntryTitle());
         // Don't have to enter an ID bc the column's database is auto-incremented
 
@@ -94,12 +88,12 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put("name", newEntry.getjEntryTitle());
         db.update("JournalEntry", cv, "id=?", new String[]{String.valueOf(newEntry.getId())});
-    }
+    }*/
 
-    public final void deleteToDo(long entryId) {
+    public final void deleteJournalEntry(long entryId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("JournalEntry", "id=?", new String[]{String.valueOf(entryId)});
-    }*/
+    }
 
 
 
@@ -136,7 +130,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 JournalEntry newEntry = new JournalEntry(id, title);
 
                 // Add it to the list
-                returnList.add(newEntry);
+                // returnList.add(newEntry);
+                JournalEntry.listOfEntries.add(newEntry);
 
                 // Boolean isCompleted = cursor.getInt(2) == 1 ? true: false;
                                                                       // ternary operator: a result variable will be given a question

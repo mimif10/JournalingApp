@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     JournalAdapter journalAdapter; // for the listofEntries
     ArrayList<JournalEntry> listOfEntries; // member variable for the list of entries - where we will store the user input
 
-    String date;
-    JournalEntry newJournalEntry;
-
     // For the Listview pop up menu
     ListView listView; // for the openDialog Box
     String[] prompts = {"Today I learned...",        // Add data to Array String
@@ -53,25 +50,24 @@ public class MainActivity extends AppCompatActivity {
         journalDatabase = new DbHelper(this); // will create a new journal database
 
         // Find the Main listView layout
-        mainListDashboard = findViewById(R.id.Mail_ListViewlayout);
+        mainListDashboard = findViewById(R.id.Main_ListViewlayout);
 
-        // Create a method to show the data from the entryCard layout to the list
-        showNewEntryCard();
-        
-        // On Click Listeners for the button
-        // newEntryBtn = findViewById(R.id.btn_newEntry);
-        // textEntry = findViewById(R.id.textEditor)
-    }
-
-    private void showNewEntryCard() {
-        // Store the entry from entry card to the Db through the arrayList
         listOfEntries = journalDatabase.getjournalEntry();
-        // Define adapter through the arrayList
-        journalAdapter = new JournalAdapter(this, listOfEntries);
-        // set it as the adapter for the mainList
+        journalAdapter = new JournalAdapter(this, JournalEntry.listOfEntries);
         mainListDashboard.setAdapter(journalAdapter);
-        journalAdapter.notifyDataSetChanged(); // update adapter
+        journalAdapter.notifyDataSetChanged();
+
+        mainListDashboard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                JournalEntry selectedEntry = (JournalEntry) mainListDashboard.getItemAtPosition(position);
+                Intent mainIntent = new Intent(MainActivity.this, ViewEntryActivity.class);
+                mainIntent.putExtra("NoteEdit", String.valueOf(selectedEntry.getId()));
+                startActivity(mainIntent);
+            }
+        });
     }
+
 
     public void openDialog(View v) {
         // add listView to alert box

@@ -50,13 +50,13 @@ public class Prompt1 extends AppCompatActivity {
         // On Click Listeners for the button
         newTextEntry = findViewById(R.id.textEditor);
        // imageView = findViewById(R.id.imageView);
-        imageButton = findViewById(R.id.AddImageButton);
-        saveButton = findViewById(R.id.saveButton);
+       // imageButton = findViewById(R.id.AddImageButton);
+       // saveButton = findViewById(R.id.saveButton);
         //cancelButton = findViewById(R.id.cancelButton);
         // reference DatabaseHelper?
 
         // Button Listeners for the save Button
-        saveButton.setOnClickListener(new View.OnClickListener() {
+      /*  saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // EditText NoteText = (EditText)newTextEntry.getText();
@@ -79,7 +79,7 @@ public class Prompt1 extends AppCompatActivity {
                    // newJournal.setCreatedAt(currentDate);
                  //   newJournal.setId(entryId);
 // Add item into the database using dbHandler (DatabaseHelper)
-
+*/
                     //dbHelper.addOne(newJournal);
                     //refreshList(); // Call after an item is added
                     /*EditText entryName = (EditText)NoteText.getText();
@@ -88,9 +88,9 @@ public class Prompt1 extends AppCompatActivity {
                     newJournal.setjEntryDescription(entryName.);*/
 
 
-            }
+         /*   }
         });
-
+*/
        // private void refreshList()
        // {
         //    RecyclerView recycView = (RecyclerView)findViewById(R.id.RecyclerView_layout);

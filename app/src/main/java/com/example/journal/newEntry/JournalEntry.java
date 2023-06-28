@@ -1,41 +1,54 @@
 package com.example.journal.newEntry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // Will hold the dataSet that will be displayed in androidx Recyclerview.
 // implementing the values from DashboardModel Class
-public class JournalEntry {// this is the Note
-   // private ArrayList <List> newList = (new ArrayList();
-    long id;
-    String jEntryTitle;
-  //  String jEntryDesc;
-   // byte[] image;
+public class JournalEntry {
+    public static String JOURNAL_EDIT_EXTRA =  "NoteEdit";
+     public static ArrayList<JournalEntry> listOfEntries = new ArrayList();
+    private int id;
+    private String title;
 
-
-    public JournalEntry(long id, String title) {
+   /* public JournalEntry(String title) {
+        this.title = title;
+    }*/
+    public JournalEntry(int id, String title) {
         this.id = id;
-        this.jEntryTitle = title;
-      //  this.jEntryDesc = desc;
-       // this.image = pic;
-        // this.isCompleted = isCompleted;
-        // this.createdAt = createdAt;
-    }
-// getters and setters for each property
-    public long getId() {
-        return id;
+        this.title = title;
     }
 
-    public void setId(long id) {
+
+    // getters and setters for each property
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getjEntryTitle() {
-        return this.jEntryTitle;
+    public static JournalEntry getNoteForID(int passedNoteID)
+    {
+        for (JournalEntry note : listOfEntries)
+        {
+            if(note.getId() == passedNoteID)
+                return note;
+        }
+        return null;
     }
-    public void setjEntryTitle(String jEntryTitle) {
-        this.jEntryTitle = jEntryTitle;
+
+    public String getTitle() {
+        return this.title;
     }
+    public void setTitle(String jEntryTitle) {
+        this.title = title;
+    }
+
+    //  this.jEntryDesc = desc;
+    // this.image = pic;
+    // this.isCompleted = isCompleted;
+    // this.createdAt = createdAt;
 
    /* public String getjEntryDesc() {
         return jEntryDesc;
@@ -81,20 +94,6 @@ public class JournalEntry {// this is the Note
                 '}';
     }*/
 
-
-
-    // public long getjEntryId() {return jEntryId;}
-   // public void setjEntryId(long jEntryId) {this.jEntryId = jEntryId;}
-
-
-
-  //  public String getjEntryDescription() {
-  //      return jEntryDescription;
-  //  }
-
-   // public void setjEntryDescription(String jEntryDescription) {
-   //     this.jEntryDescription = jEntryDescription;
-   // }
 
   /*  public boolean isCompleted() {
         return isCompleted;
