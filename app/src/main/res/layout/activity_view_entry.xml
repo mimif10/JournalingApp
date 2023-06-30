@@ -53,7 +53,7 @@
         </LinearLayout>
     </ScrollView>
 
-  <!--  <ImageButton
+    <ImageButton
         android:id="@+id/saveButtonView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         android:clickable="true"
         android:onClick="saveNote"
         android:src="@android:drawable/ic_menu_save"
-        android:text="Save" />-->
+        android:text="Save" />
 
     <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/AddImageButtonView"

@@ -40,17 +40,20 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
         // Provide a direct reference for each view with the list entry
         JournalEntry journalEntry = getItem(position);
+        // reference the JournalEntry model and get the list
+        //journalEntry = listOfEntries.get(position);
 
         // Cast the variables from the entry_card layout that will show on the main Layout
         TextView cardTitle = convertView.findViewById(R.id.TitleTextView);
-        //ImageButton deleteButton = convertView.findViewById(R.id.deleteEntryButton);
-
-        // reference the JournalEntry model and get the list
-        //journalEntry = listOfEntries.get(position);
-        // String title = journalEntry.getTitle(); // get the title from the model
-
         // set the title as the cardTitle
         cardTitle.setText(journalEntry.getTitle());
+
+        //ImageButton deleteButton = convertView.findViewById(R.id.deleteEntryButton);
+
+
+        // String title = journalEntry.getTitle(); // get the title from the model
+
+
 
         /*deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override

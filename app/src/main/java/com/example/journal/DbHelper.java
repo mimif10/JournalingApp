@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.journal.newEntry.JournalEntry;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class DbHelper extends SQLiteOpenHelper {
     // Design the database
@@ -83,12 +84,14 @@ public class DbHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-/*    public final void updateEntryDashboard(JournalEntry newEntry) {
+    public final boolean updateJournalEntry (long Id, String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("name", newEntry.getjEntryTitle());
-        db.update("JournalEntry", cv, "id=?", new String[]{String.valueOf(newEntry.getId())});
-    }*/
+        cv.put(COL_NEW_ENTRY_TITLE, title);
+       // cv.put("name", newEntry.getjEntryTitle());
+        db.update(TABLE_JOURNAL_ENTRY, cv, COL_ENTRY_ID + " =?" , new String[]{String.valueOf(Id)});
+        return true;
+    }
 
     public final void deleteJournalEntry(long entryId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -98,10 +101,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     // Get the list of journal entries on the table
-    public ArrayList<JournalEntry> getjournalEntry()
+    public HashSet<JournalEntry> getjournalEntry()
     {
         // create a return list (define the list)
-        ArrayList<JournalEntry> returnList = new ArrayList<>();
+        HashSet<JournalEntry> returnList = new HashSet<>();
         // Get permission from the database to read the data
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -121,11 +124,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0); // set this as first line in database
                 String title = cursor.getString(1); // for the edit text
                 // newEntry.setId(cursor.getLong(cursor.getColumnIndex("id")));
-                // newEntry.setjEntryId(cursor.getLong(cursor.getColumnIndex("jEntryId")));
                 // no boolean in SQLite, it just saves the int as 0 or 1
                 // convert the int = 2 into a boolean
-
-                // newEntry.setjEntryTitle(entryName);
                 // Pass this data in the Journal entry model
                 JournalEntry newEntry = new JournalEntry(id, title);
 
@@ -148,8 +148,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public void updateJournalEntry(JournalEntry journalEntry) {
-    }
+
 
 
 }

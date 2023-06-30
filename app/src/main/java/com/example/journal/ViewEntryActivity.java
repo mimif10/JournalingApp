@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ViewEntryActivity extends AppCompatActivity {
     /**
@@ -39,24 +40,25 @@ public class ViewEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_entry);
         newTextEntry = findViewById(R.id.textEditorView);
-        //saveButtonOnView = findViewById(R.id.saveButtonView);
+        saveButtonOnView = findViewById(R.id.saveButtonView);
 
-        // reference DatabaseHelper and ArrayList to get the data from the list from Mina
+        // Open the list item from Main Activity
+        // reference DatabaseHelper and ArrayList to get the data from the list from Main
         dbHelper = new DbHelper(this);
         // Use dbHelper to access the data from each position on the list
-         ArrayList<JournalEntry> list = dbHelper.getjournalEntry();
+        HashSet<JournalEntry> list = dbHelper.getjournalEntry();
         // Get position from MainActivity using Bundle intent
         Bundle extras = getIntent().getExtras();
         String noteEntered = extras.getString("NoteEdit");
         int passedNoteID = Integer.parseInt(noteEntered); // convert the Note into int
         selectedJournalEntry = JournalEntry.getNoteForID(passedNoteID); // then get the position from the list
-        String title = selectedJournalEntry.getTitle();
+        String title = selectedJournalEntry.getTitle().toString();
         if (selectedJournalEntry != null) {
             // Get the student data and show it
             // Set the title entered from edit text value to show on the ViewEntry Activity
             newTextEntry.setText(title);
         }
-
+    }
         /*saveButtonOnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +80,7 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
 
         });*/
-    }
+
     /*  private void checkForEditNote()
       {
           Intent previousIntent = getIntent();
@@ -91,7 +93,7 @@ public class ViewEntryActivity extends AppCompatActivity {
               newTextEntry.setText(journalEntry.getTitle());
           }
       }*/
-    /*public void saveNote(View view) {
+    public void saveNote(View view) {
         DbHelper dbHelper = new DbHelper(this); // Access database
         // Declare a string for the text entered on the editText entry
         String title = String.valueOf(newTextEntry.getText());
@@ -104,11 +106,14 @@ public class ViewEntryActivity extends AppCompatActivity {
             dbHelper.addOne(String.valueOf(newJournalEntry)); // add note to database
         } else {
             selectedJournalEntry.setTitle(title);
-            dbHelper.updateJournalEntry(selectedJournalEntry);
-            finish();
-        }*/
+            boolean result = dbHelper.updateJournalEntry(selectedJournalEntry.getId(), title);
+            Intent i = new Intent(ViewEntryActivity.this, MainActivity.class);
+            startActivity(i);
+        }
+        finish();
 
     }
+}
 
    /*     private void checkForEditNote(Long Id, String title)
         {
