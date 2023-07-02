@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.journal">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -26,6 +27,8 @@
             android:name=".ViewEntryActivity"
             android:exported="false" ></activity>
 
+
+
         <activity android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
         <activity
@@ -37,6 +40,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+       <!--!&#45;&#45; <Provider for application&ndash;&gt;
+        <provider
+            android:authorities="com.example.journal.fileProvider"
+            android:name="androidx.core.content.FileProvider"
+            android:enabled="true"
+            android:exported="false"
+            android:grantUriPermissions="true"/>
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>-->
 
     </application>
 

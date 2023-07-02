@@ -38,6 +38,7 @@
         android:layout_marginTop="1dp"
         android:background="@color/colorBackgroundHome"
         android:clickable="true"
+        android:focusable="true"
         android:nestedScrollingEnabled="true"
         tools:listitem="@layout/entry_card" />
     <!--    android:contentDescription="@string/enter_Text"-->

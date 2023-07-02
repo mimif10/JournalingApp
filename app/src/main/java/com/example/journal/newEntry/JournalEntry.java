@@ -10,12 +10,23 @@ public class JournalEntry {
     private int id;
     private String title;
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private  String date;
+
    /* public JournalEntry(String title) {
         this.title = title;
     }*/
-    public JournalEntry(int id, String title) {
-        this.id = id;
+    public JournalEntry(String title, String date) {
+       // this.id = id;
         this.title = title;
+        this.date = date;
     }
 
     public static ArrayList<JournalEntry> nonDeletedNotes()

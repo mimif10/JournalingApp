@@ -20,6 +20,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COL_ENTRY_ID = "jEntryId";
     // Column for title
     public static final String COL_NEW_ENTRY_TITLE = "jEntryTitle";
+    public static final String COL_NEW_ENTRY_DATE = "jEntryDate";
   //  public  static final String COL_IMAGE = "image";
    // public static final String COL_IS_COMPLETED = "isCompleted";
 
@@ -40,7 +41,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // define static variables
         // start by defining a string statement to create the table
-        String Journal_Entry_Table = "CREATE TABLE " + TABLE_JOURNAL_ENTRY + "( jEntryId integer PRIMARY KEY AUTOINCREMENT, jEntryTitle TEXT, image BLOG);";
+        String Journal_Entry_Table = "CREATE TABLE " + TABLE_JOURNAL_ENTRY + "( jEntryId integer PRIMARY KEY AUTOINCREMENT, jEntryTitle TEXT, jEntryDate DATE);";
                                                                                                                                                                       // ," + COL_IS_COMPLETED + "bool
         // then execute SQL query that will create a table
         //db.execSQL("create Table " + TABLE_JOURNAL_ENTRY + "(" + "COL_ENTRY_ID" + "INTEGER primary key autoIncrement, " + " jEntryName, activeSave bool);");
@@ -62,7 +63,7 @@ public class DbHelper extends SQLiteOpenHelper {
     // Inserting the task from MainActivity using DbHelper
     // Adding the task by passing the ToDo_obj (JournalEntry) as a parameter
     // public boolean addOne(JournalEntry newEntry){
-    public boolean addOne(String title){ /** Keep parameter as string title */
+    public boolean addOne(JournalEntry entry){ /** Keep parameter as string title */
         // SQLiteOpenHelper property
         // Permission to write to the database
         SQLiteDatabase db = this.getWritableDatabase(); // since we're adding data to the Db
@@ -70,7 +71,8 @@ public class DbHelper extends SQLiteOpenHelper {
         // Use contentValues to collect the columns with the parameter variable
          ContentValues cv = new ContentValues(); // object that stores values/data in pairs (cv.put("name", value)
         // specify value name along with its content
-        cv.put(COL_NEW_ENTRY_TITLE, title);
+        cv.put(COL_NEW_ENTRY_TITLE, entry.getTitle());
+        cv.put(COL_NEW_ENTRY_DATE, entry.getDate());
         //cv.put(COL_IMAGE, image);
         //cv.put(COL_NEW_ENTRY_TITLE, journalEntry.getTitle()); // associate a column name with a string
         //cv.put("title", newEntry.getjEntryTitle());
@@ -84,20 +86,21 @@ public class DbHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    public final boolean updateJournalEntry (long Id, String title) {
+    public final boolean updateJournalEntry (JournalEntry entry) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COL_NEW_ENTRY_TITLE, title);
-       // cv.put("name", newEntry.getjEntryTitle());
-        db.update(TABLE_JOURNAL_ENTRY, cv, COL_ENTRY_ID + " =?" , new String[]{String.valueOf(Id)});
+        cv.put(COL_NEW_ENTRY_TITLE, entry.getTitle());
+        cv.put(COL_NEW_ENTRY_DATE, entry.getDate());
+        db.update(TABLE_JOURNAL_ENTRY, cv, COL_ENTRY_ID + " =?" , new String[]{String.valueOf(entry.getId())});
+        //db.execSQL("INSERT OR REPLACE INTO TABLE_JOURNAL_ENTRY (title)" + " VALUES ('" + "Length" + "')");
         return true;
     }
 
+
     public final void deleteJournalEntry(long entryId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("JournalEntry", "id=?", new String[]{String.valueOf(entryId)});
+        db.delete("JournalEntry", "jEntryId=?", new String[]{String.valueOf(entryId)});
     }
-
 
 
     // Get the list of journal entries on the table
@@ -123,11 +126,12 @@ public class DbHelper extends SQLiteOpenHelper {
                 // local variable of the type we expect to get (ID)
                 int id = cursor.getInt(0); // set this as first line in database
                 String title = cursor.getString(1); // for the edit text
+                String date = cursor.getString(2);
                 // newEntry.setId(cursor.getLong(cursor.getColumnIndex("id")));
                 // no boolean in SQLite, it just saves the int as 0 or 1
                 // convert the int = 2 into a boolean
                 // Pass this data in the Journal entry model
-                JournalEntry newEntry = new JournalEntry(id, title);
+                JournalEntry newEntry = new JournalEntry(title, date);
 
                 // Add it to the list
                 // returnList.add(newEntry);

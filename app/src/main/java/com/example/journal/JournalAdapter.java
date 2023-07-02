@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.journal.newEntry.JournalEntry;
 import java.util.ArrayList;
@@ -48,22 +50,26 @@ public View getView(int position, View convertView, ViewGroup parent) {
         // set the title as the cardTitle
         cardTitle.setText(journalEntry.getTitle());
 
-        //ImageButton deleteButton = convertView.findViewById(R.id.deleteEntryButton);
 
 
-        // String title = journalEntry.getTitle(); // get the title from the model
-
-
-
-        /*deleteButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton deleteButton = (ImageButton) convertView.findViewById(R.id.deleteEntryButton);
+        deleteButton.setTag(position);
+        deleteButton.setFocusable(false);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         // Handle delete button click
-                        dbHelper.deleteJournalEntry(journalEntry.getId());
+                        int position = (Integer) v.getTag();
+                        dbHelper.deleteJournalEntry(Long.parseLong(String.valueOf(position)));
+                        Toast.makeText(parent.getContext(), "Entry Deleted", Toast.LENGTH_SHORT).show();
                         remove(journalEntry);
                         notifyDataSetChanged();
                 }
-        });*/
+        });
+
+
+
+
 
         // for the image - Tutorial 3
         // byte[] image = journalEntry.getImage();
