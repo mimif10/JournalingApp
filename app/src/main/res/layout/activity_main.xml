@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:background="@color/colorBackgroundHome"
     android:nestedScrollingEnabled="true"
     tools:context=".MainActivity">
@@ -37,6 +38,7 @@
         android:layout_marginTop="1dp"
         android:background="@color/colorBackgroundHome"
         android:clickable="true"
+        android:focusable="true"
         android:nestedScrollingEnabled="true"
         tools:listitem="@layout/entry_card" />
     <!--    android:contentDescription="@string/enter_Text"-->

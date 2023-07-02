@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.journal.newEntry.JournalEntry;
 import java.util.ArrayList;
@@ -40,27 +42,34 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
         // Provide a direct reference for each view with the list entry
         JournalEntry journalEntry = getItem(position);
+        // reference the JournalEntry model and get the list
+        //journalEntry = listOfEntries.get(position);
 
         // Cast the variables from the entry_card layout that will show on the main Layout
         TextView cardTitle = convertView.findViewById(R.id.TitleTextView);
-        //ImageButton deleteButton = convertView.findViewById(R.id.deleteEntryButton);
-
-        // reference the JournalEntry model and get the list
-        //journalEntry = listOfEntries.get(position);
-        // String title = journalEntry.getTitle(); // get the title from the model
-
         // set the title as the cardTitle
         cardTitle.setText(journalEntry.getTitle());
 
-        /*deleteButton.setOnClickListener(new View.OnClickListener() {
+
+
+        ImageButton deleteButton = (ImageButton) convertView.findViewById(R.id.deleteEntryButton);
+        deleteButton.setTag(position);
+        deleteButton.setFocusable(false);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         // Handle delete button click
-                        dbHelper.deleteJournalEntry(journalEntry.getId());
+                        int position = (Integer) v.getTag();
+                        dbHelper.deleteJournalEntry(Long.parseLong(String.valueOf(position)));
+                        Toast.makeText(parent.getContext(), "Entry Deleted", Toast.LENGTH_SHORT).show();
                         remove(journalEntry);
                         notifyDataSetChanged();
                 }
-        });*/
+        });
+
+
+
+
 
         // for the image - Tutorial 3
         // byte[] image = journalEntry.getImage();

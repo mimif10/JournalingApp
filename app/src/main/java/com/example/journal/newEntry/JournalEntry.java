@@ -6,18 +6,39 @@ import java.util.ArrayList;
 // implementing the values from DashboardModel Class
 public class JournalEntry {
     public static String JOURNAL_EDIT_EXTRA =  "NoteEdit";
-     public static ArrayList<JournalEntry> listOfEntries = new ArrayList();
+    public static ArrayList<JournalEntry> listOfEntries = new ArrayList();
     private int id;
     private String title;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private  String date;
 
    /* public JournalEntry(String title) {
         this.title = title;
     }*/
-    public JournalEntry(int id, String title) {
-        this.id = id;
+    public JournalEntry(String title, String date) {
+       // this.id = id;
         this.title = title;
+        this.date = date;
     }
 
+    public static ArrayList<JournalEntry> nonDeletedNotes()
+    {
+        ArrayList<JournalEntry> nonDeleted = new ArrayList<>();
+        for(JournalEntry note : listOfEntries)
+        {
+                nonDeleted.add(note);
+        }
+
+        return nonDeleted;
+    }
 
     // getters and setters for each property
     public int getId() {

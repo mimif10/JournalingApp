@@ -2,4 +2,5 @@
     <string name="app_name">Journal</string>
     <string name="Journal_dashboard">Journal Dashboard\n</string>
     <string name="enter_Text">Enter text</string>
+    <string name="custom_journal">Add your own journal entry </string>
 </resources>
