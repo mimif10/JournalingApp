@@ -7,26 +7,24 @@
     android:background="@drawable/custom_edit_drawable"
     tools:context=".Prompts.Prompt1">
 
-
-<EditText
-android:id="@+id/textEditor"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="39dp"
-android:nestedScrollingEnabled="true"
-android:singleLine="false"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent"
-android:text="Today I learned"
-android:hint="@string/enter_Text"/>
+    <EditText
+        android:id="@+id/textEditor1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:nestedScrollingEnabled="true"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Today I learned: "/>
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/saveButton"
-        android:layout_below="@id/textEditor"
+        android:layout_below="@id/textEditor1"
         android:layout_alignParentStart="true"
         android:layout_marginTop="-6dp"
         android:layout_marginBottom="15dp">

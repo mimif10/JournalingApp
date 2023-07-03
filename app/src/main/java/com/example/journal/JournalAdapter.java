@@ -23,7 +23,6 @@ import java.util.ArrayList;
 // extends RecycleView Adapter (specify the ViewHolder for the adapter - which gives us access to the views)
 public class JournalAdapter extends ArrayAdapter<JournalEntry> {
 private DbHelper dbHelper;
-
 public JournalAdapter(Context context, ArrayList<JournalEntry> allEntries) {
         super(context, 0, allEntries);
         dbHelper = new DbHelper(context);
@@ -35,6 +34,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(getContext())
                 .inflate(R.layout.entry_card, parent, false);
         }
+
         /* Same as
          LayoutInflater inflater = LayoutInflater.from(parent.getContext());
          Initialize view for convertView - then Inflate the custom layout
@@ -47,9 +47,10 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
         // Cast the variables from the entry_card layout that will show on the main Layout
         TextView cardTitle = convertView.findViewById(R.id.TitleTextView);
+        TextView date = convertView.findViewById(R.id.dateTextView);
         // set the title as the cardTitle
         cardTitle.setText(journalEntry.getTitle());
-
+        date.setText(journalEntry.getDate());
 
 
         ImageButton deleteButton = (ImageButton) convertView.findViewById(R.id.deleteEntryButton);

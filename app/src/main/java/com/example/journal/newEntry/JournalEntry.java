@@ -9,22 +9,19 @@ public class JournalEntry {
     public static ArrayList<JournalEntry> listOfEntries = new ArrayList();
     private int id;
     private String title;
-
+    private  String date;
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
-    private  String date;
+
 
    /* public JournalEntry(String title) {
         this.title = title;
     }*/
     public JournalEntry(String title, String date) {
-       // this.id = id;
+        super();
         this.title = title;
         this.date = date;
     }
@@ -38,6 +35,10 @@ public class JournalEntry {
         }
 
         return nonDeleted;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     // getters and setters for each property

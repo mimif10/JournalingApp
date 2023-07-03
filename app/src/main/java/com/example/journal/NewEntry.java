@@ -70,7 +70,7 @@ public class NewEntry extends AppCompatActivity {
                     {Manifest.permission.CAMERA}, 100);}
         else
             imageButton.setEnabled(true);
-
+/
         // Once permission is granted
 
         //TODO get the image from gallery and display it
