@@ -34,6 +34,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -56,10 +57,11 @@ public class ViewEntryActivity extends AppCompatActivity {
     private ImageButton saveButtonOnView;
     //private ImageView imageView;
     private FloatingActionButton addImageButtonView;
-
-    //private FloatingActionButton backButton;
+    private FloatingActionButton backButton;
     private ImageView imageView;
-
+    String currentDate;
+    Calendar calendar;
+    SimpleDateFormat simpleDateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class ViewEntryActivity extends AppCompatActivity {
         newTextEntry = findViewById(R.id.textEditorView);
         saveButtonOnView = findViewById(R.id.saveButtonView);
         addImageButtonView = findViewById(R.id.addImageButtonView);
+        backButton = findViewById(R.id.backButton);
         imageView = findViewById(R.id.imageView);
         imageView.setBackgroundResource(0);
 
@@ -87,23 +90,9 @@ public class ViewEntryActivity extends AppCompatActivity {
             // Get the student data and show it
             // Set the title entered from edit text value to show on the ViewEntry Activity
             newTextEntry.setText(title);
+            newTextEntry.setId(noteID);
         }
 
-        String filename = getIntent().getStringExtra("noteImage");
-        try {
-            FileInputStream receiveImage = openFileInput(filename);
-            bmp = BitmapFactory.decodeStream(receiveImage);
-            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bmp);
-            theimage.setImageDrawable(bitmapDrawable);
-            if (bmp != null) {
-                Log.d("hereboi", bmp.toString());
-            } else {
-                Log.d("hereboi", "not here ");
-            }
-            receiveImage.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         if(ActivityCompat.checkSelfPermission(ViewEntryActivity.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
             // request permission
@@ -129,10 +118,10 @@ public class ViewEntryActivity extends AppCompatActivity {
                             imageView.setImageURI(imageUri);
                             imageView.setVisibility(View.VISIBLE);
                         }
-                        else {
+                        //else {
                             // cancelled
                             //Toast.makeText(ViewEntryActivity.this, "Cancelled...", Toast.LENGTH_SHORT).show();
-                        }
+                       // }
 
                     }
                 });
@@ -147,6 +136,14 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // alertDialog.setCancelable(true);
+                finish();
+                return;
+            }
+        });
 
 
     }
@@ -176,69 +173,37 @@ public class ViewEntryActivity extends AppCompatActivity {
     }
 
 
-        /*saveButtonOnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String cardTitle = newTextEntry.getText().toString();
-                if (noteEntered.equals("NoteEdit")) {
-                    if (!cardTitle.isEmpty()) {
-                        //SimpleDateFormat sdf= new SimpleDateFormat("MMM, dd,yyyy");
-                        //String currentDate= sdf.format(new Date());
-                        JournalEntry updatedEntry = new JournalEntry(cardTitle);
-                        updatedEntry.setId(passedNoteID);
-                        dbHelper.updateJournalEntry(journalEntry);
-                        Toast.makeText(getApplicationContext(), "Updated!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    } *//*else {
-                        Toast.makeText(getApplicationContext(), "Please fill both the columns!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        });*/
-
-    /*  private void checkForEditNote()
-      {
-          Intent previousIntent = getIntent();
-         // int passedNoteID = previousIntent.getIntExtra(journalEntry.JOURNAL_EDIT_EXTRA, -1);
-          int passedNoteID = previousIntent.getIntExtra("NoteEdit", -1);
-          journalEntry = JournalEntry.getNoteForID(passedNoteID);
-
-          if (journalEntry != null)
-          {
-              newTextEntry.setText(journalEntry.getTitle());
-          }
-      }*/
-
     public void saveNote(View view) {
         DbHelper dbHelper = new DbHelper(this); // Access database
         // Declare a string for the text entered on the editText entry
-
         String title = String.valueOf(newTextEntry.getText());
-        if (selectedJournalEntry.equals("NoteEdit")) {
-            if (selectedJournalEntry == null) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM,DD,YYYY");
-                String currentDate = sdf.format(new Date());
-                // int id = JournalEntry.listOfEntries.size(); // list from JournalEntry model
+
+       // if (selectedJournalEntry.equals("NoteEdit")) {
+            if (title == null) {
+                simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                Calendar c = Calendar.getInstance();
+                currentDate = simpleDateFormat.format(c.getTime());
+                //int id = JournalEntry.listOfEntries.size(); // list from JournalEntry model
+               // JournalEntry.listOfEntries.add(newJournalEntry); // add it to the list
                 // Create a new journal entry object - pass id and title
                 dbHelper.addOne(new JournalEntry(title, currentDate));
-                JournalEntry newJournalEntry = new JournalEntry(title, currentDate);
-            } else {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM,DD,YYYY");
-                String currentDate = sdf.format(new Date());
-                JournalEntry selectedJournalEntry = new JournalEntry(title, currentDate);
-                selectedJournalEntry.setTitle(title);
-                selectedJournalEntry.setId(selectedJournalEntry.getId());
+                startActivity(new Intent(ViewEntryActivity.this, MainActivity.class));}
+                else {
+                simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                Calendar c = Calendar.getInstance();
+                currentDate = simpleDateFormat.format(c.getTime());
+                selectedJournalEntry = new JournalEntry(title, currentDate);
+                selectedJournalEntry.setId(noteID);
+                // selectedJournalEntry.setTitle(title);
+                //selectedJournalEntry.setId(selectedJournalEntry.getId());
                 boolean result = dbHelper.updateJournalEntry(selectedJournalEntry);
-                Intent i = new Intent(ViewEntryActivity.this, MainActivity.class);
-                startActivity(i);
+                startActivity(new Intent(ViewEntryActivity.this, MainActivity.class));
             }
             finish();
         }
     }
 
-    }
+
 
 
     //Getting Bitmap Image
